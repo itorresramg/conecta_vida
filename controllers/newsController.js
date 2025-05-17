@@ -20,14 +20,16 @@ exports.getNews = async (req, res) => {
         to: hoy,
         sortBy: 'publishedAt', // Ordenadas por fecha de publicación
         language: 'es',
-        pageSize: 10,
-        apiKey: apiKey
+        pageSize: 10        
+      },
+      headers:{
+        'X-Api-Key':apiKey
       }
     });
 
     res.status(200).json(resultado.data.articles);
   } catch (err) {
-    console.error('Hubo un problema al recuperar las noticias:', err.message);
+    console.error('Hubo un problema al recuperar las noticias:', err.response?.data || err.message,err.code);
     res.status(500).json({ message: 'No se pudieron cargar las noticias en este momento' });
   }
 };
